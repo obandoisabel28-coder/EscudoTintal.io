@@ -21,16 +21,21 @@ form.addEventListener("submit", (event) => {
 
   const datos = getCheckedValues("dato");
   const canales = getCheckedValues("canal");
+  const riesgosExtra = getCheckedValues("riesgo_extra");
   const protecciones = getCheckedValues("proteccion");
 
+  // Suma de exposición (datos + canales + factores operativos adicionales)
   const rawExposure =
     datos.reduce((acc, item) => acc + item.points, 0) +
-    canales.reduce((acc, item) => acc + item.points, 0);
+    canales.reduce((acc, item) => acc + item.points, 0) +
+    riesgosExtra.reduce((acc, item) => acc + item.points, 0);
 
+  // Descuento por medidas de protección marcadas
   const protectionDiscount = protecciones.reduce((acc, item) => acc + item.points, 0);
 
-  // Escala acotada entre 0 y 100
-  const finalScore = Math.max(0, Math.min(100, rawExposure - Math.round(protectionDiscount * 0.6)));
+  // Escala calibrada entre 0 y 100
+  const adjustedScore = (rawExposure - protectionDiscount * 0.5) * 0.65;
+  const finalScore = Math.max(0, Math.min(100, Math.round(adjustedScore)));
 
   let levelText = "Exposición baja";
   let levelClass = "risk-bajo";
@@ -41,12 +46,12 @@ form.addEventListener("submit", (event) => {
     levelText = "Exposición alta";
     levelClass = "risk-alto";
     summaryText =
-      "Tu negocio expone información clave en canales abiertos y presenta pocas medidas de resguardo. Se recomienda aplicar ajustes inmediatos de privacidad.";
+      "Tu negocio presenta una exposición elevada o factores operativos de vulnerabilidad ante contacto extorsivo. Se recomienda aplicar medidas de protección de inmediato.";
   } else if (finalScore >= 30) {
     levelText = "Exposición media";
     levelClass = "risk-medio";
     summaryText =
-      "Existen datos comerciales o de contacto visibles que pueden facilitar llamadas o mensajes sospechosos. Conviene reforzar configuraciones de privacidad.";
+      "Existen datos o rutinas visibles que pueden ser aprovechados por desconocidos. Reforzar tu privacidad y protocolos reducirá el riesgo.";
   }
 
   const recommendations = [];
@@ -66,9 +71,39 @@ form.addEventListener("submit", (event) => {
       "Restringe quién puede ver tus estados, fotografías y listas de contactos en WhatsApp y redes sociales."
     );
   }
-  if (protecciones.length === 0) {
+  if (riesgosExtra.some((r) => r.label.includes("números desconocidos"))) {
     recommendations.push(
-      "Inicia hoy al menos dos acciones de protección: separar el número personal y configurar la privacidad de tus cuentas."
+      "Verifica siempre el origen de pedidos o cotizaciones de números desconocidos y evita confirmar datos personales o financieros."
+    );
+  }
+  if (riesgosExtra.some((r) => r.label.includes("rutinas diarias"))) {
+    recommendations.push(
+      "No publiques horarios de apertura, cierre, arqueos de caja ni recorridos de domicilios en estados o redes abiertas."
+    );
+  }
+  if (riesgosExtra.some((r) => r.label.includes("empleados, familiares"))) {
+    recommendations.push(
+      "Capacita a quienes atienden el WhatsApp o redes del negocio sobre cómo manejar mensajes sospechosos y no entregar información sensible."
+    );
+  }
+  if (riesgosExtra.some((r) => r.label.includes("directorios abiertos"))) {
+    recommendations.push(
+      "Audita tus perfiles públicos, directorios y anuncios para retirar datos personales innecesarios."
+    );
+  }
+  if (riesgosExtra.some((r) => r.label.includes("miércoles, jueves y viernes"))) {
+    recommendations.push(
+      "Refuerza la atención preventiva en los horarios y días de mayor actividad comercial en el sector (tardes/noches y mitad/fin de semana)."
+    );
+  }
+  if (!protecciones.some((p) => p.label.includes("verificación en dos pasos"))) {
+    recommendations.push(
+      "Activa la verificación en dos pasos en WhatsApp y ajusta la privacidad de tus cuentas para prevenir suplantaciones."
+    );
+  }
+  if (!protecciones.some((p) => p.label.includes("Línea 165"))) {
+    recommendations.push(
+      "Guarda en tu teléfono la Línea 165 (GAULA) y el contacto del CAI Tintal para actuar sin improvisar ante cualquier amenaza."
     );
   }
   if (recommendations.length === 0) {
