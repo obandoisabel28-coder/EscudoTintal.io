@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escudo Tintal | Autodiagnóstico de Exposición Digital</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div>
+        <span class="badge">PMV · Opción de Grado ECSAN</span>
+        <h1>Escudo Tintal</h1>
+        <p class="subtitle">Prevención de extorsión digital para comerciantes · Sector El Tintal (Kennedy, Bogotá)</p>
+      </div>
+      <div class="emergency-box">
+        <strong>Emergencias / Extorsión</strong>
+        <span>Línea 165 (GAULA) · Línea 123</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-grid">
+    <section class="card">
+      <h2>1. Revisa qué información expone tu negocio</h2>
+      <p class="helper">
+        Selecciona los datos que compartes públicamente sobre tu comercio. Esta evaluación ocurre en tu dispositivo y no guarda datos personales.
+      </p>
+
+      <form id="diagnostic-form">
+        <fieldset class="group">
+          <legend>¿Qué información de tu negocio está visible?</legend>
+          <label><input type="checkbox" name="dato" value="25" /> Número de teléfono o WhatsApp personal/comercial</label>
+          <label><input type="checkbox" name="dato" value="20" /> Dirección exacta o ubicación del local</label>
+          <label><input type="checkbox" name="dato" value="15" /> Horarios habituales de apertura y cierre</label>
+          <label><input type="checkbox" name="dato" value="15" /> Redes sociales del negocio o perfil personal</label>
+          <label><input type="checkbox" name="dato" value="15" /> Fotografías del local, productos o familia</label>
+          <label><input type="checkbox" name="dato" value="10" /> Nombre completo del propietario o administrador</label>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>¿Dónde tienes publicada esa información?</legend>
+          <label><input type="checkbox" name="canal" value="15" /> Estados o perfiles públicos de WhatsApp</label>
+          <label><input type="checkbox" name="canal" value="15" /> Facebook o Instagram</label>
+          <label><input type="checkbox" name="canal" value="15" /> Google Maps, directorios o apps de domicilios</label>
+          <label><input type="checkbox" name="canal" value="10" /> Volantes, avisos o publicidad física en la calle</label>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>¿Ya aplicas medidas básicas de protección?</legend>
+          <label><input type="checkbox" name="proteccion" value="15" /> Uso un número distinto al personal para atender clientes</label>
+          <label><input type="checkbox" name="proteccion" value="15" /> Configuré la privacidad de mis redes y estados de WhatsApp</label>
+          <label><input type="checkbox" name="proteccion" value="10" /> Limito horarios, rutinas y datos familiares en publicaciones</label>
+        </fieldset>
+
+        <div class="actions">
+          <button type="submit" class="btn-primary">Evaluar mi nivel de exposición</button>
+          <button type="reset" id="btn-reset" class="btn-secondary">Limpiar</button>
+        </div>
+      </form>
+    </section>
+
+    <aside class="card result-card" id="result-panel" aria-live="polite">
+      <h2>2. Resultado y plan de autoprotección</h2>
+      <div id="result-placeholder" class="placeholder">
+        Completa el formulario de la izquierda para calcular tu índice de exposición digital y recibir recomendaciones prácticas.
+      </div>
+
+      <div id="result-content" class="hidden">
+        <div id="risk-badge" class="risk-pill">Nivel de exposición</div>
+        <p class="score-line">Puntaje estimado de exposición: <strong id="score-value">0 / 100</strong></p>
+        <p id="risk-summary" class="summary"></p>
+
+        <h3>Pasos recomendados para reducir el riesgo</h3>
+        <ul id="recommendations-list" class="rec-list"></ul>
+
+        <div class="protocol-box">
+          <h3>¿Recibiste una llamada o mensaje sospechoso?</h3>
+          <ol>
+            <li><strong>Mantén la calma</strong> y no entregues datos personales, familiares ni horarios del negocio.</li>
+            <li><strong>No realices pagos</strong> ni transferencias bajo presión o amenazas.</li>
+            <li><strong>Conserva la evidencia</strong> (capturas de pantalla, números, mensajes o audios).</li>
+            <li><strong>Comunícate con la Policía Nacional</strong> a través de la <strong>Línea 165 (GAULA)</strong>, la <strong>Línea 123</strong> o el <strong>CAI Tintal</strong>.</li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>
+        Prototipo académico <strong>Escudo Tintal</strong> · Pregrado en Administración Policial · Escuela de Cadetes de Policía “General Francisco de Paula Santander” (ECSAN).
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
